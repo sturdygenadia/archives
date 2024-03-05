@@ -22,3 +22,11 @@ void AnySceneConverter::doAbort() {
 bool AnySceneConverter::doBeginFile(const Containers::StringView filename) {
     CORRADE_INTERNAL_ASSERT(manager());
 //hello
+    const PluginManager::PluginMetadata* const metadata = manager()->metadata(plugin);
+    CORRADE_INTERNAL_ASSERT(metadata);
+    if(flags() & SceneConverterFlag::Verbose) {
+        Debug d;
+        d << "Trade::AnySceneConverter::beginFile(): using" << plugin;
+        if(plugin != metadata->name())
+            d << "(provided by" << metadata->name() << Debug::nospace << ")";
+    }
